@@ -1,2 +1,2 @@
-# gitTest
-im just testing how its work
+# recipes-crud
+CRUD program with recipes' base
