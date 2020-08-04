@@ -1,8 +1,13 @@
 package com.example.demo.entity;
 
+import com.example.demo.dto.StepDto;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
-
+@Getter
+@Setter
 @Entity
 @Table
 public class Step {
@@ -15,43 +20,16 @@ public class Step {
     private String dateOfCreation;
 
     @ManyToOne
-    @JoinColumn(name = "recipe_id",referencedColumnName = "id")
+    @JoinColumn(name = "recipe_id", referencedColumnName = "id")
     private Recipes recipe;
 
     @OneToMany(mappedBy = "step")
-    private List<Files>files;
+    private List<Files> files;
+
     public Step() {
     }
+//конструктор копирования
+    public Step(StepDto stepDto) {
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getStepName() {
-        return stepName;
-    }
-
-    public void setStepName(String stepName) {
-        this.stepName = stepName;
-    }
-
-    public String getDateOfCreation() {
-        return dateOfCreation;
-    }
-
-    public void setDateOfCreation(String dateOfCreation) {
-        this.dateOfCreation = dateOfCreation;
-    }
-
-    public Recipes getRecipe() {
-        return recipe;
-    }
-
-    public void setRecipe(Recipes recipe) {
-        this.recipe = recipe;
     }
 }
