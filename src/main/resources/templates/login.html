@@ -1,10 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>LOGIN</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
 </head>
+
+<style>
+    body {
+        background: #D3D3D3;
+        /* Меняется фон экрана, /
+               }
+
+               #wrapper{ /* Оболочка страницы сайта */
+        width: 1800px; /* Меняется ширина страницы */
+        margin: 0 auto;
+        background: #f2f3f4; /* Меняется задний фон страницы */
+    }
+
+    /* Шапка сайта */
+
+    #header {
+        position: relative; /* Задаём блоку относительное позиционирование для того, чтобы затем размещать, в нём другие элементы и позиционировать относительно его границ поверх фоновой картинки и заголовка */
+        height: 250px; /* Высота шапки */
+        background-color: #ffffff; /* Фон шапки */
+        margin-bottom: 5px; /* Нижний отступ шапки от остального контента */
+        border-radius: 5px; /* Закругляются углы блока */
+        box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 3px; /* Тень. Визуально приподнимает блок над оболочкой */
+    }
+
+    form{
+        top: 50px;
+        left: 300px;
+    }
+</style>
 <body>
 
+<div class="middle-box text-center loginscreen animated fadeInDown">
+    <div>
+        <form autocomplete="off" action="#" th:action="@{/login}" method="post" th:object="${userDto}"
+              class="m-t" role="form"
+              data-toggle="validator">
+            <h4> Login form </h4>
+
+            <input type="text" th:field="*{username}"
+                   placeholder="Login" class="form-control" required/>
+            <input type="text" th:field="*{password}"
+                   placeholder="Password" class="form-control" required/>
+            <button type="submit">Войти</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>

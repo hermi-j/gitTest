@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.example.demo.dto.UserDto;
+import org.springframework.data.repository.cdi.Eager;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,6 +15,7 @@ import java.util.Set;
 @Table
 public class Users implements UserDetails {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Integer id;
     @Column
@@ -21,24 +24,30 @@ public class Users implements UserDetails {
     private String username;
     @Column
     private String password;
-    @Column(name="is_active")
+    @Column(name = "is_active")
     private Boolean isActive;
-    @Column(name="date_of_creation")
+    @Column(name = "date_of_creation")
     private String dateOfCreation;
-    @Column
-    private String role;
+    @Transient
+    private String passwordConfirm;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "users_x_recipes",
             joinColumns = {@JoinColumn(name = "user_id")},
-                    inverseJoinColumns = {@JoinColumn(name = "recipe_id")})
-    private Set<Recipes> recipes= new HashSet<>();
+            inverseJoinColumns = {@JoinColumn(name = "recipe_id")})
+    private Set<Recipes> recipes = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
     private List<Files> files;
 
     @OneToMany(mappedBy = "user")
     private List<Comments> comments;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_x_role",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    private Set<Role> roles;
 
     public Integer getId() {
         return id;
@@ -54,6 +63,46 @@ public class Users implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    public Set<Recipes> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(Set<Recipes> recipes) {
+        this.recipes = recipes;
+    }
+
+    public List<Files> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<Files> files) {
+        this.files = files;
+    }
+
+    public List<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comments> comments) {
+        this.comments = comments;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public String getUsername() {
@@ -86,7 +135,16 @@ public class Users implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return getRoles();
+    }
+
+    public Users(UserDto dto) {
+        this.username = dto.getUsername();
+        this.password = dto.getPassword();
+    }
+
+    public Users() {
+
     }
 
     public String getPassword() {
@@ -113,11 +171,4 @@ public class Users implements UserDetails {
         this.dateOfCreation = dateOfCreation;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }

@@ -69,4 +69,14 @@ public class Recipes {
     public void setUsers(Set<Users> users) {
         this.users = users;
     }
+
+
+    public void setSteps(List<Step> steps) {
+        this.steps = steps;
+    }
+
+    public void setComments(List<Comments> comments) {
+        this.comments = comments;
+    }
+
 }
